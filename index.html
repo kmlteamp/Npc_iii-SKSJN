@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>NCB AI</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    background:#000;
+    color:#fff;
+}
+
+.app{
+    width:100%;
+    height:100vh;
+    display:flex;
+    flex-direction:column;
+}
+
+/* HEADER */
+
+.header{
+    height:62px;
+    min-height:62px;
+
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    padding:0 14px;
+
+    background:rgba(10,15,25,.86);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border-bottom:1px solid rgba(255,255,255,.14);
+
+    z-index:10;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logoIcon{
+    width:38px;
+    height:38px;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(
+        135deg,
+        #1677ff,
+        #8b5cf6
+    );
+
+    font-size:13px;
+    font-weight:bold;
+
+    box-shadow:
+        0 5px 20px
+        rgba(22,119,255,.35);
+}
+
+.logoText{
+    display:flex;
+    flex-direction:column;
+}
+
+.logoTitle{
+    font-size:18px;
+    font-weight:bold;
+}
+
+.logoSub{
+    margin-top:2px;
+    font-size:10px;
+    color:#aeb8ca;
+}
+
+.newButton{
+    width:40px;
+    height:40px;
+
+    border:0;
+    border-radius:12px;
+
+    color:#fff;
+
+    background:rgba(255,255,255,.1);
+
+    font-size:22px;
+
+    cursor:pointer;
+}
+
+.newButton:active{
+    transform:scale(.93);
+}
+
+/* CHAT */
+
+.chat{
+    position:relative;
+
+    flex:1;
+
+    overflow-y:auto;
+
+    padding:
+        25px
+        12px
+        125px;
+
+    background-image:
+        linear-gradient(
+            rgba(0,0,0,.16),
+            rgba(0,0,0,.28)
+        ),
+        url(
+            "https://image.dienthoaivui.com.vn/x,webp,q90/https://media-asset.dienthoaivui.com.vn/uploads/dashboard/editor_upload/hinh-nen-ios-26-3-1.jpg"
+        );
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+}
+
+.chat::-webkit-scrollbar{
+    width:5px;
+}
+
+.chat::-webkit-scrollbar-thumb{
+    background:rgba(255,255,255,.3);
+    border-radius:20px;
+}
+
+/* WELCOME */
+
+.welcome{
+    max-width:600px;
+
+    margin:
+        65px auto
+        30px;
+
+    text-align:center;
+
+    padding:0 15px;
+}
+
+.aiLogo{
+    width:76px;
+    height:76px;
+
+    margin:auto;
+
+    border-radius:25px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1677ff,
+            #9333ea
+        );
+
+    font-size:27px;
+    font-weight:bold;
+
+    box-shadow:
+        0 15px 45px
+        rgba(0,0,0,.4);
+}
+
+.welcome h1{
+    margin-top:18px;
+
+    font-size:27px;
+
+    text-shadow:
+        0 2px 8px #000;
+}
+
+.welcome p{
+    margin-top:9px;
+
+    color:#f0f3f8;
+
+    line-height:1.5;
+
+    text-shadow:
+        0 2px 7px #000;
+}
+
+/* MESSAGE */
+
+.message{
+    max-width:850px;
+
+    margin:
+        0 auto
+        17px;
+
+    display:flex;
+
+    gap:9px;
+
+    align-items:flex-start;
+}
+
+.message.user{
+    justify-content:flex-end;
+}
+
+.avatar{
+    width:37px;
+    min-width:37px;
+    height:37px;
+
+    border-radius:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        rgba(10,17,30,.92);
+
+    border:
+        1px solid
+        rgba(255,255,255,.16);
+
+    font-size:10px;
+
+    font-weight:bold;
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,0,0,.25);
+}
+
+.message.user .avatar{
+    order:2;
+
+    background:#1677ff;
+}
+
+.bubble{
+    max-width:min(78%,700px);
+
+    padding:
+        12px 15px;
+
+    border-radius:17px;
+
+    line-height:1.55;
+
+    white-space:pre-wrap;
+
+    word-break:break-word;
+
+    background:
+        rgba(12,20,35,.88);
+
+    border:
+        1px solid
+        rgba(255,255,255,.14);
+
+    box-shadow:
+        0 5px 20px
+        rgba(0,0,0,.25);
+
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+}
+
+.message.user .bubble{
+    background:
+        rgba(22,119,255,.95);
+
+    border-color:
+        rgba(255,255,255,.14);
+}
+
+/* TYPING */
+
+.typing{
+    display:flex;
+
+    gap:5px;
+
+    align-items:center;
+
+    height:18px;
+}
+
+.typing span{
+    width:6px;
+    height:6px;
+
+    border-radius:50%;
+
+    background:#d4dbe7;
+
+    animation:typing 1s infinite;
+}
+
+.typing span:nth-child(2){
+    animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+    animation-delay:.3s;
+}
+
+@keyframes typing{
+
+    0%,80%,100%{
+        opacity:.25;
+        transform:translateY(0);
+    }
+
+    40%{
+        opacity:1;
+        transform:translateY(-3px);
+    }
+}
+
+/* INPUT */
+
+.inputArea{
+    position:fixed;
+
+    left:0;
+    right:0;
+    bottom:0;
+
+    padding:
+        10px
+        12px
+        13px;
+
+    background:
+        linear-gradient(
+            transparent,
+            rgba(0,0,0,.9) 35%,
+            rgba(0,0,0,.98)
+        );
+
+    z-index:20;
+}
+
+.inputBox{
+    width:100%;
+
+    max-width:850px;
+
+    margin:auto;
+
+    display:flex;
+
+    align-items:flex-end;
+
+    gap:8px;
+
+    padding:
+        7px
+        7px
+        7px
+        12px;
+
+    background:
+        rgba(10,17,29,.92);
+
+    border:
+        1px solid
+        rgba(255,255,255,.17);
+
+    border-radius:18px;
+
+    box-shadow:
+        0 8px 35px
+        rgba(0,0,0,.45);
+
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+}
+
+#messageInput{
+    flex:1;
+
+    min-width:0;
+
+    resize:none;
+
+    height:45px;
+
+    max-height:130px;
+
+    border:0;
+
+    outline:none;
+
+    background:transparent;
+
+    color:#fff;
+
+    padding:
+        12px
+        0;
+
+    font-size:15px;
+
+    line-height:21px;
+}
+
+#messageInput::placeholder{
+    color:#9da8ba;
+}
+
+.sendButton{
+    width:45px;
+    height:45px;
+
+    min-width:45px;
+
+    border:0;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1677ff,
+            #6d45f5
+        );
+
+    color:#fff;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    display:flex;
+
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+        0 5px 15px
+        rgba(22,119,255,.3);
+
+    transition:.15s;
+}
+
+.sendButton:active{
+    transform:scale(.92);
+}
+
+.sendButton:disabled{
+    opacity:.45;
+    cursor:not-allowed;
+}
+
+/* ERROR */
+
+.errorBubble{
+    color:#ffb4b4;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .welcome{
+        margin-top:45px;
+    }
+
+    .welcome h1{
+        font-size:24px;
+    }
+
+    .bubble{
+        max-width:82%;
+    }
+
+    .chat{
+        padding-top:20px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="logo">
+
+            <div class="logoIcon">
+                NCB
+            </div>
+
+            <div class="logoText">
+
+                <div class="logoTitle">
+                    NCB AI
+                </div>
+
+                <div class="logoSub">
+                    Trợ lý AI
+                </div>
+
+            </div>
+
+        </div>
+
+        <button
+            class="newButton"
+            id="newChatButton"
+            title="Cuộc trò chuyện mới">
+            ＋
+        </button>
+
+    </header>
+
+
+    <!-- CHAT -->
+
+    <main
+        class="chat"
+        id="chat">
+
+        <div
+            class="welcome"
+            id="welcome">
+
+            <div class="aiLogo">
+                NCB
+            </div>
+
+            <h1>
+                Xin chào, mình là NCB
+            </h1>
+
+            <p>
+                Trợ lý AI của bạn.
+                Hãy nhập câu hỏi bên dưới để bắt đầu trò chuyện.
+            </p>
+
+        </div>
+
+    </main>
+
+
+    <!-- INPUT -->
+
+    <div class="inputArea">
+
+        <div class="inputBox">
+
+            <textarea
+                id="messageInput"
+                placeholder="Nhắn tin với NCB..."
+                autocomplete="off"
+                spellcheck="false"></textarea>
+
+            <button
+                class="sendButton"
+                id="sendButton"
+                title="Gửi">
+                ➤
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================================
+   NCB AI FRONTEND
+   API KEY KHÔNG ĐẶT TRONG FILE NÀY
+   ========================================= */
+
+
+/* DOM */
+
+const chat =
+    document.getElementById("chat");
+
+const input =
+    document.getElementById("messageInput");
+
+const sendButton =
+    document.getElementById("sendButton");
+
+const newChatButton =
+    document.getElementById("newChatButton");
+
+const welcome =
+    document.getElementById("welcome");
+
+
+/* HISTORY */
+
+let history = [];
+
+try {
+
+    const saved =
+        localStorage.getItem("NCB_CHAT_HISTORY");
+
+    if(saved){
+
+        history =
+            JSON.parse(saved);
+
+        if(!Array.isArray(history)){
+            history = [];
+        }
+
+    }
+
+}catch(error){
+
+    history = [];
+
+}
+
+
+/* =========================================
+   SAVE HISTORY
+   ========================================= */
+
+function saveHistory(){
+
+    try{
+
+        localStorage.setItem(
+            "NCB_CHAT_HISTORY",
+            JSON.stringify(history)
+        );
+
+    }catch(error){
+
+        console.log(
+            "Không thể lưu lịch sử."
+        );
+
+    }
+
+}
+
+
+/* =========================================
+   SCROLL
+   ========================================= */
+
+function scrollBottom(){
+
+    setTimeout(() => {
+
+        chat.scrollTop =
+            chat.scrollHeight;
+
+    },50);
+
+}
+
+
+/* =========================================
+   ADD MESSAGE
+   ========================================= */
+
+function addMessage(
+    role,
+    text
+){
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message " + role;
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "avatar";
+
+    avatar.textContent =
+        role === "user"
+            ? "BẠN"
+            : "NCB";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+    bubble.textContent =
+        text;
+
+
+    message.appendChild(avatar);
+
+    message.appendChild(bubble);
+
+    chat.appendChild(message);
+
+    scrollBottom();
+
+}
+
+
+/* =========================================
+   TYPING
+   ========================================= */
+
+function showTyping(){
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        "message assistant";
+
+    message.id =
+        "typingMessage";
+
+
+    const avatar =
+        document.createElement("div");
+
+    avatar.className =
+        "avatar";
+
+    avatar.textContent =
+        "NCB";
+
+
+    const bubble =
+        document.createElement("div");
+
+    bubble.className =
+        "bubble";
+
+
+    const typing =
+        document.createElement("div");
+
+    typing.className =
+        "typing";
+
+
+    for(let i=0;i<3;i++){
+
+        const dot =
+            document.createElement("span");
+
+        typing.appendChild(dot);
+
+    }
+
+
+    bubble.appendChild(typing);
+
+    message.appendChild(avatar);
+
+    message.appendChild(bubble);
+
+    chat.appendChild(message);
+
+    scrollBottom();
+
+}
+
+
+/* =========================================
+   REMOVE TYPING
+   ========================================= */
+
+function hideTyping(){
+
+    const typing =
+        document.getElementById(
+            "typingMessage"
+        );
+
+    if(typing){
+
+        typing.remove();
+
+    }
+
+}
+
+
+/* =========================================
+   LOAD OLD CHAT
+   ========================================= */
+
+function loadHistory(){
+
+    if(history.length === 0){
+
+        return;
+
+    }
+
+
+    if(welcome){
+
+        welcome.remove();
+
+    }
+
+
+    history.forEach(item => {
+
+        if(
+            item &&
+            (
+                item.role === "user" ||
+                item.role === "assistant"
+            )
+        ){
+
+            addMessage(
+                item.role,
+                item.content || ""
+            );
+
+        }
+
+    });
+
+}
+
+
+/* =========================================
+   SEND MESSAGE
+   ========================================= */
+
+async function sendMessage(){
+
+    const text =
+        input.value.trim();
+
+
+    if(!text){
+
+        return;
+
+    }
+
+
+    if(sendButton.disabled){
+
+        return;
+
+    }
+
+
+    /* Xóa welcome */
+
+    if(welcome){
+
+        welcome.remove();
+
+    }
+
+
+    /* Hiện tin nhắn người dùng */
+
+    addMessage(
+        "user",
+        text
+    );
+
+
+    /* Lưu lịch sử */
+
+    history.push({
+
+        role:"user",
+
+        content:text
+
+    });
+
+    saveHistory();
+
+
+    /* Xóa ô nhập */
+
+    input.value = "";
+
+    input.style.height =
+        "45px";
+
+
+    /* Loading */
+
+    sendButton.disabled =
+        true;
+
+    showTyping();
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/api/chat",
+                {
+
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        messages:
+                            history
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        hideTyping();
+
+
+        if(!response.ok){
+
+            throw new Error(
+
+                data?.error ||
+                "Server AI trả về lỗi."
+
+            );
+
+        }
+
+
+        /*
+          Hỗ trợ nhiều kiểu
+          response khác nhau
+        */
+
+        let answer = "";
+
+
+        if(
+            data?.choices &&
+            data.choices.length > 0
+        ){
+
+            const choice =
+                data.choices[0];
+
+
+            if(
+                choice?.message?.content
+            ){
+
+                answer =
+                    choice.message.content;
+
+            }
+            else if(
+                choice?.text
+            ){
+
+                answer =
+                    choice.text;
+
+            }
+
+        }
+
+
+        if(!answer){
+
+            if(
+                typeof data?.output ===
+                "string"
+            ){
+
+                answer =
+                    data.output;
+
+            }
+
+        }
+
+
+        if(!answer){
+
+            if(
+                typeof data?.response ===
+                "string"
+            ){
+
+                answer =
+                    data.response;
+
+            }
+
+        }
+
+
+        if(!answer){
+
+            throw new Error(
+                "Không lấy được nội dung trả lời từ API."
+            );
+
+        }
+
+
+        /* Hiện câu trả lời */
+
+        addMessage(
+            "assistant",
+            answer
+        );
+
+
+        /* Lưu câu trả lời */
+
+        history.push({
+
+            role:"assistant",
+
+            content:answer
+
+        });
+
+        saveHistory();
+
+
+    }
+    catch(error){
+
+        hideTyping();
+
+
+        console.error(
+            "NCB ERROR:",
+            error
+        );
+
+
+        const errorText =
+            "Xin lỗi, NCB chưa thể trả lời lúc này.\n\n" +
+            "Lỗi: " +
+            error.message;
+
+
+        addMessage(
+            "assistant",
+            errorText
+        );
+
+
+    }
+    finally{
+
+        sendButton.disabled =
+            false;
+
+        input.focus();
+
+    }
+
+}
+
+
+/* =========================================
+   NEW CHAT
+   ========================================= */
+
+function newChat(){
+
+    history = [];
+
+
+    try{
+
+        localStorage.removeItem(
+            "NCB_CHAT_HISTORY"
+        );
+
+    }catch(error){}
+
+
+    chat.innerHTML = "";
+
+
+    const newWelcome =
+        document.createElement("div");
+
+    newWelcome.className =
+        "welcome";
+
+    newWelcome.id =
+        "welcome";
+
+
+    newWelcome.innerHTML = `
+
+        <div class="aiLogo">
+            NCB
+        </div>
+
+        <h1>
+            Xin chào, mình là NCB
+        </h1>
+
+        <p>
+            Trợ lý AI của bạn.
+            Hãy nhập câu hỏi bên dưới
+            để bắt đầu trò chuyện.
+        </p>
+
+    `;
+
+
+    chat.appendChild(
+        newWelcome
+    );
+
+
+    input.focus();
+
+}
+
+
+/* =========================================
+   ENTER GỬI
+   SHIFT + ENTER XUỐNG DÒNG
+   ========================================= */
+
+input.addEventListener(
+    "keydown",
+    function(event){
+
+        if(
+            event.key === "Enter" &&
+            !event.shiftKey
+        ){
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   TỰ ĐỘNG ĐỔI CHIỀU CAO TEXTAREA
+   ========================================= */
+
+input.addEventListener(
+    "input",
+    function(){
+
+        this.style.height =
+            "45px";
+
+        this.style.height =
+            Math.min(
+                this.scrollHeight,
+                130
+            ) + "px";
+
+    }
+);
+
+
+/* =========================================
+   BUTTON SEND
+   ========================================= */
+
+sendButton.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+/* =========================================
+   NEW CHAT BUTTON
+   ========================================= */
+
+newChatButton.addEventListener(
+    "click",
+    newChat
+);
+
+
+/* =========================================
+   LOAD
+   ========================================= */
+
+loadHistory();
+
+input.focus();
+
+</script>
+
+</body>
+</html>
