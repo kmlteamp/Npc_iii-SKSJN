@@ -1,0 +1,7 @@
+FPT_API_KEY=sk-J6GiN9lRjEDmhpE-B1wWNV3dpMvyH2VDcPWCnDfyvvo=
+
+FPT_API_URL=https://neo.fpt.ai/cng-bng-org/cng-bng-workspace/serverless-inference/api-keys
+
+FPT_MODEL=NCB_AI
+
+PORT=3000
